@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2017 Uppercut
+//  Copyright (c) 2017 Flyingsand
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,25 +24,25 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UCJSON.h"
+#import "FSJSON.h"
 
 
-@class UCFoo;
+@class FSFoo;
 
-struct _uc_struct {
+struct _fs_struct {
     int num;
 };
-typedef struct _uc_struct UCStruct;
+typedef struct _fs_struct FSStruct;
 
-union _uc_union {
+union _fs_union {
     char ch;
     int num;
 };
-typedef union _uc_union UCUnion;
+typedef union _fs_union FSUnion;
 
 
-#pragma mark - UCSerializableObject
-@interface UCSerializableObject : NSObject<UCJSONSerializable>
+#pragma mark - FSSerializableObject
+@interface FSSerializableObject : NSObject<FSJSONSerializable>
 // Strings
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSMutableString *mutableName;
@@ -80,15 +80,15 @@ typedef union _uc_union UCUnion;
 @property (nonatomic, strong) NSDictionary *dictionaryWithNull;
 
 // Custom objects
-@property (nonatomic, strong) UCFoo *foo;
+@property (nonatomic, strong) FSFoo *foo;
 
 // Custom object collections
-@property (nonatomic, strong) NSArray<UCFoo*> *aFooArray;
-@property (nonatomic, strong) NSDictionary<NSString*,UCFoo*> *aFooDictionary;
+@property (nonatomic, strong) NSArray<FSFoo*> *aFooArray;
+@property (nonatomic, strong) NSDictionary<NSString*,FSFoo*> *aFooDictionary;
 
 // C types
-@property (nonatomic) UCStruct aStruct;
-@property (nonatomic) UCUnion aUnion;
+@property (nonatomic) FSStruct aStruct;
+@property (nonatomic) FSUnion aUnion;
 
 // Value transforming
 @property (nonatomic, strong) NSDate *unixDate;
@@ -107,37 +107,37 @@ typedef union _uc_union UCUnion;
 @end
 
 
-#pragma mark - UCFoo
-@interface UCFoo : NSObject<UCJSONSerializable>
+#pragma mark - FSFoo
+@interface FSFoo : NSObject<FSJSONSerializable>
 @property (nonatomic, strong) NSString *foo;
 
 @end
 
 
-#pragma mark - UCSubObject
-@interface UCSubObject : UCSerializableObject
+#pragma mark - FSSubObject
+@interface FSSubObject : FSSerializableObject
 @property (nonatomic, strong) NSString *subString;
 
 @end
 
 
-#pragma mark - UCInvalidObject
-@interface UCInvalidObject : NSObject
+#pragma mark - FSInvalidObject
+@interface FSInvalidObject : NSObject
 @property (nonatomic, strong) NSString *invalid;
 
 @end
 
 
-#pragma mark - UCInvalidPropertyObject
-@interface UCInvalidPropertyObject : NSObject<UCJSONSerializable>
+#pragma mark - FSInvalidPropertyObject
+@interface FSInvalidPropertyObject : NSObject<FSJSONSerializable>
 @property (nonatomic, strong) NSSet *aSet;
 
 @end
 
 
 #pragma mark - 
-@interface UCStructValueTransformer : NSValueTransformer
+@interface FSStructValueTransformer : NSValueTransformer
 @end
 
-@interface UCUnionValueTransformer : NSValueTransformer
+@interface FSUnionValueTransformer : NSValueTransformer
 @end

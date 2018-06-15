@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2017 Uppercut
+//  Copyright (c) 2017 Flyingsand
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +24,14 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "UCSerializableObject.h"
+#import "FSSerializableObject.h"
 
 
-@interface UCJSONFileOperationsTestCase : XCTestCase
+@interface FSJSONFileOperationsTestCase : XCTestCase
 @property (nonatomic, strong) NSString *testsDir;
 @end
 
-@implementation UCJSONFileOperationsTestCase
+@implementation FSJSONFileOperationsTestCase
 
 - (void)setUp {
     [super setUp];
@@ -60,7 +60,7 @@
     if (self.testsDir) {
         NSError *error;
         NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"Serialized.json"];
-        NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
+        NSDictionary *json = [FSJSONSerialization JSONFromFile:filePath error:&error];
         XCTAssertNotNil(json, @"");
         XCTAssertNil(error, @"");
     }
@@ -70,7 +70,7 @@
     if (self.testsDir) {
         NSError *error;
         NSString *filePath = [self.testsDir stringByAppendingString:@"Unknown.json"];
-        NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
+        NSDictionary *json = [FSJSONSerialization JSONFromFile:filePath error:&error];
         XCTAssertNil(json, @"");
         XCTAssertNotNil(error, @"");
     }
@@ -80,7 +80,7 @@
     if (self.testsDir) {
         NSError *error;
         NSString *filePath = [self.testsDir stringByAppendingString:@"Invalid.json"];
-        NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
+        NSDictionary *json = [FSJSONSerialization JSONFromFile:filePath error:&error];
         XCTAssertNil(json, @"");
         XCTAssertNotNil(error, @"");
     }
@@ -90,7 +90,7 @@
     if (self.testsDir) {
         NSError *error;
         NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"ValidOut.json"];
-        BOOL success = [UCJSONSerialization writeJSON:@{@"foo": @"bar"} toFile:filePath error:&error];
+        BOOL success = [FSJSONSerialization writeJSON:@{@"foo": @"bar"} toFile:filePath error:&error];
         XCTAssertTrue(success, @"");
         XCTAssertNil(error, @"");
     }
@@ -100,7 +100,7 @@
     if (self.testsDir) {
         NSError *error;
         NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"InvalidOut.json"];
-        BOOL success = [UCJSONSerialization writeJSON:@{@(0): @"zero"} toFile:filePath error:&error];
+        BOOL success = [FSJSONSerialization writeJSON:@{@(0): @"zero"} toFile:filePath error:&error];
         XCTAssertFalse(success, @"");
         XCTAssertNotNil(error, @"");
     }
@@ -110,7 +110,7 @@
     if (self.testsDir) {
         NSError *error;
         NSString *filePath = [self.testsDir stringByAppendingPathComponent:@"/Unknown/Unknown.json"];
-        BOOL success = [UCJSONSerialization writeJSON:@{@"foo": @"bar"} toFile:filePath error:&error];
+        BOOL success = [FSJSONSerialization writeJSON:@{@"foo": @"bar"} toFile:filePath error:&error];
         XCTAssertFalse(success, @"");
         XCTAssertNotNil(error, @"");
     }

@@ -7,34 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		35919AB61EEB0D2C00F5191B /* UCTestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 35919AB51EEB0D2C00F5191B /* UCTestSerialization.m */; };
-		35919ABD1EEB0E7000F5191B /* UCSerializableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 35919ABC1EEB0E7000F5191B /* UCSerializableObject.m */; };
-		35919ABE1EEB125D00F5191B /* UCJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 843F98C31ECA5DE800C74977 /* UCJSON.m */; };
-		840A39091EEF2C5E00B31987 /* UCTestDeserialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A39081EEF2C5E00B31987 /* UCTestDeserialization.m */; };
-		84A369301EF08731005ED84B /* UCTestFileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3692F1EF08731005ED84B /* UCTestFileOperations.m */; };
-		84AE9F5F1EF1DAA6009AB544 /* UCSerializableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 35919ABC1EEB0E7000F5191B /* UCSerializableObject.m */; };
-		84AE9F601EF1DAA9009AB544 /* UCTestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 35919AB51EEB0D2C00F5191B /* UCTestSerialization.m */; };
-		84AE9F611EF1DAAB009AB544 /* UCTestDeserialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A39081EEF2C5E00B31987 /* UCTestDeserialization.m */; };
-		84AE9F621EF1DAAE009AB544 /* UCTestFileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3692F1EF08731005ED84B /* UCTestFileOperations.m */; };
-		84AE9F651EF1DBA8009AB544 /* UCJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 843F98C31ECA5DE800C74977 /* UCJSON.m */; };
+		35919AB61EEB0D2C00F5191B /* FSTestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 35919AB51EEB0D2C00F5191B /* FSTestSerialization.m */; };
+		35919ABD1EEB0E7000F5191B /* FSSerializableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 35919ABC1EEB0E7000F5191B /* FSSerializableObject.m */; };
+		35919ABE1EEB125D00F5191B /* FSJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 843F98C31ECA5DE800C74977 /* FSJSON.m */; };
+		840A39091EEF2C5E00B31987 /* FSTestDeserialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A39081EEF2C5E00B31987 /* FSTestDeserialization.m */; };
+		84A369301EF08731005ED84B /* FSTestFileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3692F1EF08731005ED84B /* FSTestFileOperations.m */; };
+		84AE9F5F1EF1DAA6009AB544 /* FSSerializableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 35919ABC1EEB0E7000F5191B /* FSSerializableObject.m */; };
+		84AE9F601EF1DAA9009AB544 /* FSTestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 35919AB51EEB0D2C00F5191B /* FSTestSerialization.m */; };
+		84AE9F611EF1DAAB009AB544 /* FSTestDeserialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 840A39081EEF2C5E00B31987 /* FSTestDeserialization.m */; };
+		84AE9F621EF1DAAE009AB544 /* FSTestFileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3692F1EF08731005ED84B /* FSTestFileOperations.m */; };
+		84AE9F651EF1DBA8009AB544 /* FSJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 843F98C31ECA5DE800C74977 /* FSJSON.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		35919AB31EEB0D2C00F5191B /* UCJSON iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "UCJSON iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		35919AB51EEB0D2C00F5191B /* UCTestSerialization.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = UCTestSerialization.m; path = Tests/UCTestSerialization.m; sourceTree = "<group>"; };
+		35919AB31EEB0D2C00F5191B /* FSJSON iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FSJSON iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		35919AB51EEB0D2C00F5191B /* FSTestSerialization.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FSTestSerialization.m; path = Tests/FSTestSerialization.m; sourceTree = "<group>"; };
 		35919AB71EEB0D2C00F5191B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = "<group>"; };
-		35919ABB1EEB0E7000F5191B /* UCSerializableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UCSerializableObject.h; path = Tests/UCSerializableObject.h; sourceTree = "<group>"; };
-		35919ABC1EEB0E7000F5191B /* UCSerializableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UCSerializableObject.m; path = Tests/UCSerializableObject.m; sourceTree = "<group>"; };
-		840A39081EEF2C5E00B31987 /* UCTestDeserialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UCTestDeserialization.m; path = Tests/UCTestDeserialization.m; sourceTree = "<group>"; };
-		843F98C21ECA5DE800C74977 /* UCJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCJSON.h; sourceTree = "<group>"; };
-		843F98C31ECA5DE800C74977 /* UCJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCJSON.m; sourceTree = "<group>"; };
+		35919ABB1EEB0E7000F5191B /* FSSerializableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSSerializableObject.h; path = Tests/FSSerializableObject.h; sourceTree = "<group>"; };
+		35919ABC1EEB0E7000F5191B /* FSSerializableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSSerializableObject.m; path = Tests/FSSerializableObject.m; sourceTree = "<group>"; };
+		840A39081EEF2C5E00B31987 /* FSTestDeserialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSTestDeserialization.m; path = Tests/FSTestDeserialization.m; sourceTree = "<group>"; };
+		843F98C21ECA5DE800C74977 /* FSJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSJSON.h; path = FSJSON/FSJSON.h; sourceTree = "<group>"; };
+		843F98C31ECA5DE800C74977 /* FSJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSJSON.m; path = FSJSON/FSJSON.m; sourceTree = "<group>"; };
 		84A3692D1EF0840D005ED84B /* Serialized.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Serialized.json; path = Tests/Serialized.json; sourceTree = "<group>"; };
-		84A3692F1EF08731005ED84B /* UCTestFileOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UCTestFileOperations.m; path = Tests/UCTestFileOperations.m; sourceTree = "<group>"; };
+		84A3692F1EF08731005ED84B /* FSTestFileOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSTestFileOperations.m; path = Tests/FSTestFileOperations.m; sourceTree = "<group>"; };
 		84A369311EF088B8005ED84B /* Invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Invalid.json; path = Tests/Invalid.json; sourceTree = "<group>"; };
 		84AE9F501EF1A372009AB544 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		84AE9F511EF1B3D3009AB544 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		84AE9F561EF1DA67009AB544 /* UCJSON macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "UCJSON macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		84AE9F661EF1DE1D009AB544 /* UCTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UCTests.h; path = Tests/UCTests.h; sourceTree = "<group>"; };
+		84AE9F561EF1DA67009AB544 /* FSJSON macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FSJSON macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84AE9F661EF1DE1D009AB544 /* FSTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FSTests.h; path = Tests/FSTests.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +60,7 @@
 			children = (
 				84AE9F511EF1B3D3009AB544 /* LICENSE.txt */,
 				84AE9F501EF1A372009AB544 /* README.md */,
-				843F98BA1ECA5DA200C74977 /* UCJSON */,
+				843F98BA1ECA5DA200C74977 /* FSJSON */,
 				84AE9F5E1EF1DA8A009AB544 /* Tests */,
 				843F98B91ECA5DA200C74977 /* Products */,
 			);
@@ -69,30 +69,30 @@
 		843F98B91ECA5DA200C74977 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				35919AB31EEB0D2C00F5191B /* UCJSON iOS Tests.xctest */,
-				84AE9F561EF1DA67009AB544 /* UCJSON macOS Tests.xctest */,
+				35919AB31EEB0D2C00F5191B /* FSJSON iOS Tests.xctest */,
+				84AE9F561EF1DA67009AB544 /* FSJSON macOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		843F98BA1ECA5DA200C74977 /* UCJSON */ = {
+		843F98BA1ECA5DA200C74977 /* FSJSON */ = {
 			isa = PBXGroup;
 			children = (
-				843F98C21ECA5DE800C74977 /* UCJSON.h */,
-				843F98C31ECA5DE800C74977 /* UCJSON.m */,
+				843F98C21ECA5DE800C74977 /* FSJSON.h */,
+				843F98C31ECA5DE800C74977 /* FSJSON.m */,
 			);
-			path = UCJSON;
+			name = FSJSON;
 			sourceTree = "<group>";
 		};
 		84AE9F5E1EF1DA8A009AB544 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				84AE9F661EF1DE1D009AB544 /* UCTests.h */,
-				35919ABB1EEB0E7000F5191B /* UCSerializableObject.h */,
-				35919ABC1EEB0E7000F5191B /* UCSerializableObject.m */,
-				35919AB51EEB0D2C00F5191B /* UCTestSerialization.m */,
-				840A39081EEF2C5E00B31987 /* UCTestDeserialization.m */,
-				84A3692F1EF08731005ED84B /* UCTestFileOperations.m */,
+				84AE9F661EF1DE1D009AB544 /* FSTests.h */,
+				35919ABB1EEB0E7000F5191B /* FSSerializableObject.h */,
+				35919ABC1EEB0E7000F5191B /* FSSerializableObject.m */,
+				35919AB51EEB0D2C00F5191B /* FSTestSerialization.m */,
+				840A39081EEF2C5E00B31987 /* FSTestDeserialization.m */,
+				84A3692F1EF08731005ED84B /* FSTestFileOperations.m */,
 				84A3692D1EF0840D005ED84B /* Serialized.json */,
 				84A369311EF088B8005ED84B /* Invalid.json */,
 				35919AB71EEB0D2C00F5191B /* Info.plist */,
@@ -103,9 +103,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		35919AB21EEB0D2C00F5191B /* UCJSON iOS Tests */ = {
+		35919AB21EEB0D2C00F5191B /* FSJSON iOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 35919ABA1EEB0D2C00F5191B /* Build configuration list for PBXNativeTarget "UCJSON iOS Tests" */;
+			buildConfigurationList = 35919ABA1EEB0D2C00F5191B /* Build configuration list for PBXNativeTarget "FSJSON iOS Tests" */;
 			buildPhases = (
 				35919AAF1EEB0D2C00F5191B /* Sources */,
 				35919AB01EEB0D2C00F5191B /* Frameworks */,
@@ -115,14 +115,14 @@
 			);
 			dependencies = (
 			);
-			name = "UCJSON iOS Tests";
+			name = "FSJSON iOS Tests";
 			productName = "UCJSON iOS Tests";
-			productReference = 35919AB31EEB0D2C00F5191B /* UCJSON iOS Tests.xctest */;
+			productReference = 35919AB31EEB0D2C00F5191B /* FSJSON iOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		84AE9F551EF1DA67009AB544 /* UCJSON macOS Tests */ = {
+		84AE9F551EF1DA67009AB544 /* FSJSON macOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 84AE9F5B1EF1DA67009AB544 /* Build configuration list for PBXNativeTarget "UCJSON macOS Tests" */;
+			buildConfigurationList = 84AE9F5B1EF1DA67009AB544 /* Build configuration list for PBXNativeTarget "FSJSON macOS Tests" */;
 			buildPhases = (
 				84AE9F521EF1DA67009AB544 /* Sources */,
 				84AE9F531EF1DA67009AB544 /* Frameworks */,
@@ -132,9 +132,9 @@
 			);
 			dependencies = (
 			);
-			name = "UCJSON macOS Tests";
+			name = "FSJSON macOS Tests";
 			productName = "UCJSON macOS Tests";
-			productReference = 84AE9F561EF1DA67009AB544 /* UCJSON macOS Tests.xctest */;
+			productReference = 84AE9F561EF1DA67009AB544 /* FSJSON macOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -143,22 +143,22 @@
 		843F98B01ECA5DA200C74977 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Uppercut;
 				TargetAttributes = {
 					35919AB21EEB0D2C00F5191B = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = WP82U438S6;
+						DevelopmentTeam = VAA7YY5ZEU;
 						ProvisioningStyle = Automatic;
 					};
 					84AE9F551EF1DA67009AB544 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = WP82U438S6;
+						DevelopmentTeam = VAA7YY5ZEU;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 843F98B31ECA5DA200C74977 /* Build configuration list for PBXProject "UCJSON" */;
+			buildConfigurationList = 843F98B31ECA5DA200C74977 /* Build configuration list for PBXProject "FSJSON" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -170,8 +170,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				35919AB21EEB0D2C00F5191B /* UCJSON iOS Tests */,
-				84AE9F551EF1DA67009AB544 /* UCJSON macOS Tests */,
+				35919AB21EEB0D2C00F5191B /* FSJSON iOS Tests */,
+				84AE9F551EF1DA67009AB544 /* FSJSON macOS Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -198,11 +198,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35919ABE1EEB125D00F5191B /* UCJSON.m in Sources */,
-				35919AB61EEB0D2C00F5191B /* UCTestSerialization.m in Sources */,
-				35919ABD1EEB0E7000F5191B /* UCSerializableObject.m in Sources */,
-				840A39091EEF2C5E00B31987 /* UCTestDeserialization.m in Sources */,
-				84A369301EF08731005ED84B /* UCTestFileOperations.m in Sources */,
+				35919ABE1EEB125D00F5191B /* FSJSON.m in Sources */,
+				35919AB61EEB0D2C00F5191B /* FSTestSerialization.m in Sources */,
+				35919ABD1EEB0E7000F5191B /* FSSerializableObject.m in Sources */,
+				840A39091EEF2C5E00B31987 /* FSTestDeserialization.m in Sources */,
+				84A369301EF08731005ED84B /* FSTestFileOperations.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,11 +210,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84AE9F611EF1DAAB009AB544 /* UCTestDeserialization.m in Sources */,
-				84AE9F601EF1DAA9009AB544 /* UCTestSerialization.m in Sources */,
-				84AE9F5F1EF1DAA6009AB544 /* UCSerializableObject.m in Sources */,
-				84AE9F621EF1DAAE009AB544 /* UCTestFileOperations.m in Sources */,
-				84AE9F651EF1DBA8009AB544 /* UCJSON.m in Sources */,
+				84AE9F611EF1DAAB009AB544 /* FSTestDeserialization.m in Sources */,
+				84AE9F601EF1DAA9009AB544 /* FSTestSerialization.m in Sources */,
+				84AE9F5F1EF1DAA6009AB544 /* FSSerializableObject.m in Sources */,
+				84AE9F621EF1DAAE009AB544 /* FSTestFileOperations.m in Sources */,
+				84AE9F651EF1DBA8009AB544 /* FSJSON.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +225,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = WP82U438S6;
+				DEVELOPMENT_TEAM = VAA7YY5ZEU;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -240,7 +240,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = WP82U438S6;
+				DEVELOPMENT_TEAM = VAA7YY5ZEU;
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -261,15 +261,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -309,15 +317,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -344,7 +360,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = WP82U438S6;
+				DEVELOPMENT_TEAM = VAA7YY5ZEU;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.uppercut.UCJSON-macOS-Tests";
@@ -356,7 +372,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = WP82U438S6;
+				DEVELOPMENT_TEAM = VAA7YY5ZEU;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.uppercut.UCJSON-macOS-Tests";
@@ -367,7 +383,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		35919ABA1EEB0D2C00F5191B /* Build configuration list for PBXNativeTarget "UCJSON iOS Tests" */ = {
+		35919ABA1EEB0D2C00F5191B /* Build configuration list for PBXNativeTarget "FSJSON iOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				35919AB81EEB0D2C00F5191B /* Debug */,
@@ -376,7 +392,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		843F98B31ECA5DA200C74977 /* Build configuration list for PBXProject "UCJSON" */ = {
+		843F98B31ECA5DA200C74977 /* Build configuration list for PBXProject "FSJSON" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				843F98BD1ECA5DA200C74977 /* Debug */,
@@ -385,7 +401,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		84AE9F5B1EF1DA67009AB544 /* Build configuration list for PBXNativeTarget "UCJSON macOS Tests" */ = {
+		84AE9F5B1EF1DA67009AB544 /* Build configuration list for PBXNativeTarget "FSJSON macOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				84AE9F5C1EF1DA67009AB544 /* Debug */,

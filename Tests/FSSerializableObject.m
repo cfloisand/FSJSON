@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2017 Uppercut
+//  Copyright (c) 2017 Flyingsand
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,11 @@
 //  Created by Christian Floisand on 2017-06-09.
 //
 
-#import "UCSerializableObject.h"
+#import "FSSerializableObject.h"
 
 
-#pragma mark - UCSerializableObject
-@implementation UCSerializableObject {
+#pragma mark - FSSerializableObject
+@implementation FSSerializableObject {
     NSUInteger _anIvar;
 }
 
@@ -69,7 +69,7 @@
 
 - (Class)classForArrayElementsOfProperty:(NSString *)property {
     if ([property isEqualToString:@"aFooArray"]) {
-        return [UCFoo class];
+        return [FSFoo class];
     }
     return NULL;
 }
@@ -79,7 +79,7 @@
     if ((keyPathComponents.count == 2) && [keyPathComponents.firstObject isEqualToString:@"aFooDictionary"]) {
         NSString *key = keyPathComponents.lastObject;
         if ([key isEqualToString:@"foo0"] || [key isEqualToString:@"foo1"] || [key isEqualToString:@"foo2"]) {
-            return [UCFoo class];
+            return [FSFoo class];
         }
     }
     return NULL;
@@ -87,16 +87,16 @@
 
 - (NSValueTransformer *)valueTransformerForProperty:(NSString *)property {
     if ([property isEqualToString:@"unixDate"]) {
-        UCDateToUnixTimeTransformer *transformer = [UCDateToUnixTimeTransformer new];
+        FSDateToUnixTimeTransformer *transformer = [FSDateToUnixTimeTransformer new];
         return transformer;
     } else if ([property isEqualToString:@"aRange"]) {
-        UCRangeTransformer *transformer = [UCRangeTransformer new];
+        FSRangeTransformer *transformer = [FSRangeTransformer new];
         return transformer;
     } else if ([property isEqualToString:@"aStruct"]) {
-        UCStructValueTransformer *transformer = [UCStructValueTransformer new];
+        FSStructValueTransformer *transformer = [FSStructValueTransformer new];
         return transformer;
     } else if ([property isEqualToString:@"aUnion"]) {
-        UCUnionValueTransformer *transformer = [UCUnionValueTransformer new];
+        FSUnionValueTransformer *transformer = [FSUnionValueTransformer new];
         return transformer;
     }
     return nil;
@@ -109,32 +109,32 @@
 @end
 
 
-#pragma mark - UCFoo
-@implementation UCFoo
+#pragma mark - FSFoo
+@implementation FSFoo
 
 @end
 
 
-#pragma mark - UCSubObject
-@implementation UCSubObject
+#pragma mark - FSSubObject
+@implementation FSSubObject
 
 @end
 
 
-#pragma mark - UCInvalidObject
-@implementation UCInvalidObject
+#pragma mark - FSInvalidObject
+@implementation FSInvalidObject
 
 @end
 
 
-#pragma mark - UCInvalidPropertyObject
-@implementation UCInvalidPropertyObject
+#pragma mark - FSInvalidPropertyObject
+@implementation FSInvalidPropertyObject
 
 @end
 
 
-#pragma mark - UCStructValueTransformer
-@implementation UCStructValueTransformer
+#pragma mark - FSStructValueTransformer
+@implementation FSStructValueTransformer
 
 + (Class)transformedValueClass {
     return [NSDictionary class];
@@ -147,7 +147,7 @@
 - (id)transformedValue:(id)value {
     NSDictionary *dictValue = nil;
     if (value) {
-        UCStruct structValue;
+        FSStruct structValue;
         [value getValue:&structValue];
         dictValue = @{@"num": @(structValue.num)};
     }
@@ -157,9 +157,9 @@
 - (id)reverseTransformedValue:(id)value {
     NSValue *structValue = nil;
     if (value) {
-        UCStruct str;
+        FSStruct str;
         str.num = [[value objectForKey:@"num"] intValue];
-        structValue = [NSValue valueWithBytes:&str objCType:@encode(UCStruct)];
+        structValue = [NSValue valueWithBytes:&str objCType:@encode(FSStruct)];
     }
     return structValue;
 }
@@ -167,8 +167,8 @@
 @end
 
 
-#pragma mark - UCUnionValueTransformer
-@implementation UCUnionValueTransformer
+#pragma mark - FSUnionValueTransformer
+@implementation FSUnionValueTransformer
 
 + (Class)transformedValueClass {
     return [NSDictionary class];
@@ -181,7 +181,7 @@
 - (id)transformedValue:(id)value {
     NSDictionary *dictValue = nil;
     if (value) {
-        UCUnion unionValue;
+        FSUnion unionValue;
         [value getValue:&unionValue];
         dictValue = @{@"ch": @(unionValue.ch), @"num": @(unionValue.num)};
     }
@@ -191,10 +191,10 @@
 - (id)reverseTransformedValue:(id)value {
     NSValue *structValue = nil;
     if (value) {
-        UCUnion uni;
+        FSUnion uni;
         uni.ch = [[value objectForKey:@"ch"] charValue];
         uni.num = [[value objectForKey:@"num"] intValue];
-        structValue = [NSValue valueWithBytes:&uni objCType:@encode(UCUnion)];
+        structValue = [NSValue valueWithBytes:&uni objCType:@encode(FSUnion)];
     }
     return structValue;
 }

@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2017 Uppercut
+//  Copyright (c) 2017 Flyingsand
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 //  Created by Christian Floisand on 2016-07-28.
 //
 
-#import "UCJSON.h"
+#import "FSJSON.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
 
@@ -31,7 +31,7 @@
 #define IVAR(type, ivar, obj) *IVAR_ADDR(type, ivar, obj)
 
 static NSDictionary<NSString*,NSString*>*
-UCGetKeyMap(id<UCJSONSerializable> instance) {
+UCGetKeyMap(id<FSJSONSerializable> instance) {
     NSDictionary *keyMap = nil;
     if ([instance respondsToSelector:@selector(keyMap)]) {
         keyMap = [instance keyMap];
@@ -41,7 +41,7 @@ UCGetKeyMap(id<UCJSONSerializable> instance) {
 }
 
 static NSSet<NSString*>*
-UCGetDoNotSerializeSet(id<UCJSONSerializable> instance) {
+UCGetDoNotSerializeSet(id<FSJSONSerializable> instance) {
     NSSet<NSString*> *doNotSerialize = [NSSet setWithObject:@"isa"]; // NOTE(christian): Exclude the "isa" ivar of NSObject.
     if ([instance respondsToSelector:@selector(doNotSerialize)]) {
         doNotSerialize = [doNotSerialize setByAddingObjectsFromSet:[instance doNotSerialize]];
@@ -94,7 +94,7 @@ UCDefaultDateFormatter() {
 }
 
 static NSDateFormatter*
-UCGetDateFormatter(id<UCJSONSerializable> instance, NSString *propertyName) {
+UCGetDateFormatter(id<FSJSONSerializable> instance, NSString *propertyName) {
     NSDateFormatter *formatter = nil;
     if ([instance respondsToSelector:@selector(dateFormatterForDateProperty:)]) {
         formatter = [instance dateFormatterForDateProperty:propertyName];
@@ -116,16 +116,16 @@ UCIsClassMutable(Class class) {
 
 
 #pragma mark - Native types serialization
-@interface NSString (UCJSONSerialization)
+@interface NSString (FSJSONSerialization)
 - (NSString *)__serialize;
 - (NSString *)__deserialize;
-- (NSDate *)__deserializeToNSDateWithInstace:(id<UCJSONSerializable>)instance propertyName:(NSString *)propertyName;
+- (NSDate *)__deserializeToNSDateWithInstace:(id<FSJSONSerializable>)instance propertyName:(NSString *)propertyName;
 - (NSData *)__deserializeToNSData;
 @end
-@implementation NSString (UCJSONSerialization)
+@implementation NSString (FSJSONSerialization)
 - (NSString *)__serialize { return self; }
 - (NSString *)__deserialize { return self; }
-- (NSDate *)__deserializeToNSDateWithInstace:(id<UCJSONSerializable>)instance propertyName:(NSString *)propertyName {
+- (NSDate *)__deserializeToNSDateWithInstace:(id<FSJSONSerializable>)instance propertyName:(NSString *)propertyName {
     NSDateFormatter *formatter = UCGetDateFormatter(instance, propertyName);
     return [formatter dateFromString:self];
 }
@@ -134,46 +134,46 @@ UCIsClassMutable(Class class) {
 }
 @end
 
-@interface NSNumber (UCJSONSerialization)
+@interface NSNumber (FSJSONSerialization)
 - (NSNumber *)__serialize;
 - (NSNumber *)__deserialize;
 @end
-@implementation NSNumber (UCJSONSerialization)
+@implementation NSNumber (FSJSONSerialization)
 - (NSNumber *)__serialize { return self; }
 - (NSNumber *)__deserialize { return self; }
 @end
 
-@interface NSNull (UCJSONSerialization)
+@interface NSNull (FSJSONSerialization)
 - (NSNull *)__serialize;
 - (NSNull *)__deserialize;
 @end
-@implementation NSNull (UCJSONSerialization)
+@implementation NSNull (FSJSONSerialization)
 - (NSNull *)__serialize { return self; }
 - (NSNull *)__deserialize { return self; }
 @end
 
-@interface NSDate (UCJSONSerialization)
-- (NSString *)__serializeWithInstance:(id<UCJSONSerializable>)instance propertyName:(NSString *)propertyName;
+@interface NSDate (FSJSONSerialization)
+- (NSString *)__serializeWithInstance:(id<FSJSONSerializable>)instance propertyName:(NSString *)propertyName;
 - (NSDate *)__deserialize;
 @end
-@implementation NSDate (UCJSONSerialization)
-- (NSString *)__serializeWithInstance:(id<UCJSONSerializable>)instance propertyName:(NSString *)propertyName {
+@implementation NSDate (FSJSONSerialization)
+- (NSString *)__serializeWithInstance:(id<FSJSONSerializable>)instance propertyName:(NSString *)propertyName {
     NSDateFormatter *formatter = UCGetDateFormatter(instance, propertyName);
     return [formatter stringFromDate:self];
 }
 - (NSDate *)__deserialize { return self; }
 @end
 
-@interface NSData (UCJSONSerialization)
+@interface NSData (FSJSONSerialization)
 - (NSString *)__serialize;
 @end
-@implementation NSData (UCJSONSerialization)
+@implementation NSData (FSJSONSerialization)
 - (NSString *)__serialize { return [self base64EncodedStringWithOptions:0]; }
 @end
 
 
-#pragma mark - UCJSONSerialization
-@implementation UCJSONSerialization
+#pragma mark - FSJSONSerialization
+@implementation FSJSONSerialization
 
 + (id)__ivarValueFromIvar:(Ivar)ivar instance:(id)instance {
     id ivarValue;
@@ -197,7 +197,7 @@ UCIsClassMutable(Class class) {
         case '*':
         {
             // TODO(christian): Should char strings be supported due to the issue in deserializing them? See __setIvar below.
-            NSAssert(NO, @"[UCJSONSerialization] Raw (char *) strings are unsupported at this time.");
+            NSAssert(NO, @"[FSJSONSerialization] Raw (char *) strings are unsupported at this time.");
             char **val = IVAR_ADDR(char*, ivar, instance);
             ivarValue = [NSString stringWithUTF8String:*val];
         } break;
@@ -214,14 +214,14 @@ UCIsClassMutable(Class class) {
         } break;
             
         default:
-            NSAssert(NO, @"[UCJSONSerialization] Unsupported type encoding.");
+            NSAssert(NO, @"[FSJSONSerialization] Unsupported type encoding.");
             break;
     }
     
     return ivarValue;
 }
 
-+ (id)__serializeObject:(id)obj withInstance:(id<UCJSONSerializable>)instance propertyName:(NSString *)propertyName {
++ (id)__serializeObject:(id)obj withInstance:(id<FSJSONSerializable>)instance propertyName:(NSString *)propertyName {
     if ([obj respondsToSelector:@selector(__serialize)]) {
         obj = [obj __serialize];
     } else if ([obj respondsToSelector:@selector(__serializeWithInstance:propertyName:)]) {
@@ -231,7 +231,7 @@ UCIsClassMutable(Class class) {
             obj = [self __serializeArray:obj withInstance:instance propertyName:propertyName];
         } else if ([obj isKindOfClass:[NSDictionary class]]) {
             obj = [self __serializeDictionary:obj withInstance:instance propertyName:propertyName];
-        } else if ([obj conformsToProtocol:@protocol(UCJSONSerializable)]) {
+        } else if ([obj conformsToProtocol:@protocol(FSJSONSerializable)]) {
             NSMutableDictionary *subJson = [NSMutableDictionary dictionary];
             [self __serializeIvarsOfInstance:obj withClass:[obj class] jsonDictionary:&subJson];
             obj = subJson;
@@ -243,10 +243,10 @@ UCIsClassMutable(Class class) {
     return obj;
 }
 
-+ (NSDictionary *)__serializeDictionary:(NSDictionary *)dictionary withInstance:(id<UCJSONSerializable>)instance propertyName:(NSString *)propertyName {
++ (NSDictionary *)__serializeDictionary:(NSDictionary *)dictionary withInstance:(id<FSJSONSerializable>)instance propertyName:(NSString *)propertyName {
     NSMutableDictionary *dictJson = [NSMutableDictionary dictionary];
     [dictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
-        NSAssert([key isKindOfClass:[NSString class]], @"[UCJSONSerialization] Dictionary keys must be of type NSString.");
+        NSAssert([key isKindOfClass:[NSString class]], @"[FSJSONSerialization] Dictionary keys must be of type NSString.");
         obj = [self __serializeObject:obj withInstance:instance propertyName:propertyName];
         if (!obj) {
             obj = [NSNull null];
@@ -257,7 +257,7 @@ UCIsClassMutable(Class class) {
     return dictJson;
 }
 
-+ (NSArray *)__serializeArray:(NSArray *)array withInstance:(id<UCJSONSerializable>)instance propertyName:(NSString *)propertyName {
++ (NSArray *)__serializeArray:(NSArray *)array withInstance:(id<FSJSONSerializable>)instance propertyName:(NSString *)propertyName {
     NSMutableArray *arrayJson = [NSMutableArray array];
     [array enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj = [self __serializeObject:obj withInstance:instance propertyName:propertyName];
@@ -270,7 +270,7 @@ UCIsClassMutable(Class class) {
     return arrayJson;
 }
 
-+ (void)__serializeIvarsOfInstance:(id<UCJSONSerializable>)instance withClass:(Class)class jsonDictionary:(NSMutableDictionary * __autoreleasing *)json {
++ (void)__serializeIvarsOfInstance:(id<FSJSONSerializable>)instance withClass:(Class)class jsonDictionary:(NSMutableDictionary * __autoreleasing *)json {
     Class superclass = class_getSuperclass(class);
     if (superclass && superclass != [NSObject class]) {
         [self __serializeIvarsOfInstance:instance withClass:superclass jsonDictionary:json];
@@ -312,14 +312,14 @@ UCIsClassMutable(Class class) {
     free(classIvars);
 }
 
-+ (id)__deserializeNativeValue:(id)value toClass:(Class)class withInstance:(id<UCJSONSerializable>)instance propertyName:(NSString *)propertyName keyPath:(NSString *)keyPath {
++ (id)__deserializeNativeValue:(id)value toClass:(Class)class withInstance:(id<FSJSONSerializable>)instance propertyName:(NSString *)propertyName keyPath:(NSString *)keyPath {
     if ([value isKindOfClass:[NSString class]]) {
         if ([class isSubclassOfClass:[NSDate class]]) {
             value = [value __deserializeToNSDateWithInstace:instance propertyName:propertyName];
         } else if ([class isSubclassOfClass:[NSData class]]) {
             value = [value __deserializeToNSData];
         } else {
-            NSAssert([class isSubclassOfClass:[NSString class]], @"[UCJSONSerialization] Native value class expected to be NSString.");
+            NSAssert([class isSubclassOfClass:[NSString class]], @"[FSJSONSerialization] Native value class expected to be NSString.");
             value = [value __deserialize];
         }
     } else if ([value isKindOfClass:[NSDictionary class]]) {
@@ -337,7 +337,7 @@ UCIsClassMutable(Class class) {
     return value;
 }
 
-+ (NSArray *)__deserializeArray:(NSArray *)arrayJson withPropertyName:(NSString *)propertyName instance:(id<UCJSONSerializable>)instance {
++ (NSArray *)__deserializeArray:(NSArray *)arrayJson withPropertyName:(NSString *)propertyName instance:(id<FSJSONSerializable>)instance {
     NSMutableArray *array = [NSMutableArray array];
     id obj = arrayJson.firstObject;
     if (obj) {
@@ -351,7 +351,7 @@ UCIsClassMutable(Class class) {
         }
         
         [arrayJson enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([class conformsToProtocol:@protocol(UCJSONSerializable)]) {
+            if ([class conformsToProtocol:@protocol(FSJSONSerializable)]) {
                 obj = [self objectOfClass:class fromJSON:obj];
             } else {
                 obj = [self __deserializeNativeValue:obj toClass:class withInstance:instance propertyName:propertyName keyPath:propertyName];
@@ -364,16 +364,16 @@ UCIsClassMutable(Class class) {
     return array;
 }
 
-+ (NSDictionary *)__deserializeDictionary:(NSDictionary *)dictJson withPropertyName:(NSString *)propertyName instance:(id<UCJSONSerializable>)instance keyPath:(NSString *)keyPath {
++ (NSDictionary *)__deserializeDictionary:(NSDictionary *)dictJson withPropertyName:(NSString *)propertyName instance:(id<FSJSONSerializable>)instance keyPath:(NSString *)keyPath {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dictJson enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
-        NSAssert([key isKindOfClass:[NSString class]], @"[UCJSONSerialization] Dictionary keys must be of type NSString.");
+        NSAssert([key isKindOfClass:[NSString class]], @"[FSJSONSerialization] Dictionary keys must be of type NSString.");
         Class class = NULL;
         if ([instance respondsToSelector:@selector(classForDictionaryObjectWithKeyPath:)]) {
             class = [instance classForDictionaryObjectWithKeyPath:[keyPath stringByAppendingFormat:@".%@", key]];
         }
         
-        if (class && [class conformsToProtocol:@protocol(UCJSONSerializable)]) {
+        if (class && [class conformsToProtocol:@protocol(FSJSONSerializable)]) {
             obj = [self objectOfClass:class fromJSON:obj];
         } else {
             if (!class) {
@@ -389,7 +389,7 @@ UCIsClassMutable(Class class) {
     return dict;
 }
 
-+ (NSDictionary *)__deserializeDictionary:(NSDictionary *)dictJson withPropertyName:(NSString *)propertyName instance:(id<UCJSONSerializable>)instance {
++ (NSDictionary *)__deserializeDictionary:(NSDictionary *)dictJson withPropertyName:(NSString *)propertyName instance:(id<FSJSONSerializable>)instance {
     return [self __deserializeDictionary:dictJson withPropertyName:propertyName instance:instance keyPath:propertyName];
 }
 
@@ -413,7 +413,7 @@ UCIsClassMutable(Class class) {
             
         case '*':
         {
-            NSAssert(NO, @"[UCJSONSerialization] (char *) instance variables unsupported for deserialization at this time.");
+            NSAssert(NO, @"[FSJSONSerialization] (char *) instance variables unsupported for deserialization at this time.");
             // TODO(christian): What should be done about the malloc here? Should it be assumed that the object will free char strings?
             // What if the char string is a const string? etc.
             // e.g. char *str;
@@ -429,7 +429,7 @@ UCIsClassMutable(Class class) {
             Class class = UCClassFromIvarType(ivarType);
             NSString *ivarName = UCIvarNameFromIvar(ivar);
             
-            if ([class conformsToProtocol:@protocol(UCJSONSerializable)]) {
+            if ([class conformsToProtocol:@protocol(FSJSONSerializable)]) {
                 value = [self objectOfClass:class fromJSON:value];
             } else {
                 value = [self __deserializeNativeValue:value toClass:class withInstance:instance propertyName:ivarName keyPath:ivarName];
@@ -441,17 +441,17 @@ UCIsClassMutable(Class class) {
         case '{':
         case '(': {
             // NOTE(christian): C struct or union.
-            NSAssert([value isKindOfClass:[NSValue class]], @"[UCJSONSerialization] C types (structs & unions) must be contained in an NSValue object.");
+            NSAssert([value isKindOfClass:[NSValue class]], @"[FSJSONSerialization] C types (structs & unions) must be contained in an NSValue object.");
             [value getValue:IVAR_ADDR(void, ivar, instance)];
         } break;
             
         default:
-            NSAssert(NO, @"[UCJSONSerialization] Unsupported type encoding.");
+            NSAssert(NO, @"[FSJSONSerialization] Unsupported type encoding.");
             break;
     }
 }
 
-+ (void)__deserializeIvarsOfInstance:(id<UCJSONSerializable>)instance withClass:(Class)cl json:(NSDictionary *)json {
++ (void)__deserializeIvarsOfInstance:(id<FSJSONSerializable>)instance withClass:(Class)cl json:(NSDictionary *)json {
     Class superclass = class_getSuperclass(cl);
     if (superclass && superclass != [NSObject class]) {
         [self __deserializeIvarsOfInstance:instance withClass:superclass json:json];
@@ -476,7 +476,7 @@ UCIsClassMutable(Class class) {
             if (obj) {
                 if ([instance respondsToSelector:@selector(valueTransformerForProperty:)]) {
                     NSValueTransformer *transformer = [instance valueTransformerForProperty:key];
-                    NSAssert((transformer ? [[transformer class] allowsReverseTransformation] : YES), @"[UCJSONSerialization] Value transformers must allow reverse transformation.");
+                    NSAssert((transformer ? [[transformer class] allowsReverseTransformation] : YES), @"[FSJSONSerialization] Value transformers must allow reverse transformation.");
                     if (transformer && [[transformer class] allowsReverseTransformation]) {
                         obj = [transformer reverseTransformedValue:obj];
                     }
@@ -490,9 +490,9 @@ UCIsClassMutable(Class class) {
     free(classIvars);
 }
 
-+ (NSDictionary *)JSONFromObject:(id<UCJSONSerializable>)object {
++ (NSDictionary *)JSONFromObject:(id<FSJSONSerializable>)object {
     NSMutableDictionary *json = nil;
-    if (object && [object conformsToProtocol:@protocol(UCJSONSerializable)]) {
+    if (object && [object conformsToProtocol:@protocol(FSJSONSerializable)]) {
         json = [NSMutableDictionary dictionary];
         [self __serializeIvarsOfInstance:object withClass:[object class] jsonDictionary:&json];
         BOOL validJson = [NSJSONSerialization isValidJSONObject:json];
@@ -504,8 +504,8 @@ UCIsClassMutable(Class class) {
     return json;
 }
 
-+ (id<UCJSONSerializable>)objectOfClass:(Class)class fromJSON:(NSDictionary *)json {
-    id<UCJSONSerializable> object = nil;
++ (id<FSJSONSerializable>)objectOfClass:(Class)class fromJSON:(NSDictionary *)json {
+    id<FSJSONSerializable> object = nil;
     if (json && class) {
         object = [class new];
         BOOL success = [self setObject:object fromJSON:json];
@@ -517,12 +517,12 @@ UCIsClassMutable(Class class) {
     return object;
 }
 
-+ (BOOL)setObject:(id<UCJSONSerializable>)object fromJSON:(NSDictionary *)json {
++ (BOOL)setObject:(id<FSJSONSerializable>)object fromJSON:(NSDictionary *)json {
     BOOL success = NO;
     if (object && json) {
         BOOL validJson = [NSJSONSerialization isValidJSONObject:json];
         if (validJson) {
-            BOOL validObject = [object conformsToProtocol:@protocol(UCJSONSerializable)];
+            BOOL validObject = [object conformsToProtocol:@protocol(FSJSONSerializable)];
             if (validObject) {
                 [self __deserializeIvarsOfInstance:object withClass:[object class] json:json];
                 success = YES;
@@ -606,12 +606,12 @@ UCIsClassMutable(Class class) {
     return success;
 }
 
-+ (BOOL)serializeObject:(id<UCJSONSerializable>)object toFile:(NSString *)file error:(NSError * __autoreleasing *)error {
++ (BOOL)serializeObject:(id<FSJSONSerializable>)object toFile:(NSString *)file error:(NSError * __autoreleasing *)error {
     NSDictionary *json = [self JSONFromObject:object];
     return [self writeJSON:json toFile:file error:error];
 }
 
-+ (id<UCJSONSerializable>)deserializeObjectOfClass:(Class)class fromFile:(NSString *)file error:(NSError * __autoreleasing *)error {
++ (id<FSJSONSerializable>)deserializeObjectOfClass:(Class)class fromFile:(NSString *)file error:(NSError * __autoreleasing *)error {
     NSDictionary *json = [self JSONFromFile:file error:error];
     return [self objectOfClass:class fromJSON:json];
 }
@@ -623,8 +623,8 @@ UCIsClassMutable(Class class) {
 @end
 
 
-#pragma mark - UCDateToUnixTimeTransformer
-@implementation UCDateToUnixTimeTransformer
+#pragma mark - FSDateToUnixTimeTransformer
+@implementation FSDateToUnixTimeTransformer
 
 + (Class)transformedValueClass {
     return [NSNumber class];
@@ -653,8 +653,8 @@ UCIsClassMutable(Class class) {
 @end
 
 
-#pragma mark - UCRangeTransforer
-@implementation UCRangeTransformer
+#pragma mark - FSRangeTransforer
+@implementation FSRangeTransformer
 
 + (Class)transformedValueClass {
     return [NSDictionary class];

@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2017 Uppercut
+//  Copyright (c) 2017 Flyingsand
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +23,10 @@
 //  Created by Christian Floisand on 2017-06-09.
 //
 
-#ifndef UCTests_h
-#define UCTests_h
+#ifndef FSTests_h
+#define FSTests_h
 
-#define UCJSON_TESTS_FLOAT_ACCURACY 0.0000001f
-#define UCJSON_TESTS_DOUBLE_ACCURACY 0.00000000001
+#define FSJSON_TESTS_FLOAT_ACCURACY 0.0000001f
+#define FSJSON_TESTS_DOUBLE_ACCURACY 0.00000000001
 
 #endif

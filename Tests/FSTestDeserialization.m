@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2017 Uppercut
+//  Copyright (c) 2017 Flyingsand
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,23 +24,23 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "UCSerializableObject.h"
-#import "UCTests.h"
+#import "FSSerializableObject.h"
+#import "FSTests.h"
 
 
-@interface UCJSONDeserializationTestCase : XCTestCase
-@property (nonatomic, strong) UCSerializableObject *serializableObject;
+@interface FSJSONDeserializationTestCase : XCTestCase
+@property (nonatomic, strong) FSSerializableObject *serializableObject;
 @property (nonatomic, strong) NSDictionary *json;
 @end
 
-@implementation UCJSONDeserializationTestCase
+@implementation FSJSONDeserializationTestCase
 
 - (void)setUp {
     [super setUp];
-    self.serializableObject = [UCSerializableObject new];
+    self.serializableObject = [FSSerializableObject new];
     
     NSDate *date = [NSDate date];
-    NSString *dateString = [[UCJSONSerialization defaultDateFormatter] stringFromDate:date];
+    NSString *dateString = [[FSJSONSerialization defaultDateFormatter] stringFromDate:date];
     NSString *customDateString = [[self.serializableObject dateFormatterForDateProperty:@"customDate"] stringFromDate:date];
     const uint8_t bytes[] = {0xDA, 0xDA, 0xBA, 0xDC, 0xFF, 0xEE};
     NSString *dataString = [[NSData dataWithBytes:bytes length:sizeof(bytes)] base64EncodedStringWithOptions:0];
@@ -86,7 +86,7 @@
                   @"saila": @"baz",
                   @"anIvar": @(29)};
     
-    BOOL success = [UCJSONSerialization setObject:self.serializableObject fromJSON:self.json];
+    BOOL success = [FSJSONSerialization setObject:self.serializableObject fromJSON:self.json];
     XCTAssertTrue(success, @"");
 }
 
@@ -96,24 +96,24 @@
 }
 
 - (void)testDeserializeNilObject {
-    BOOL success = [UCJSONSerialization setObject:nil fromJSON:self.json];
+    BOOL success = [FSJSONSerialization setObject:nil fromJSON:self.json];
     XCTAssertFalse(success, @"");
 }
 
 - (void)testDeserializeNilJSON {
-    BOOL success = [UCJSONSerialization setObject:self.serializableObject fromJSON:nil];
+    BOOL success = [FSJSONSerialization setObject:self.serializableObject fromJSON:nil];
     XCTAssertFalse(success, @"");
 }
 
 - (void)testDeserializeInvalidObject {
-    UCInvalidObject *invalidObject = [UCInvalidObject new];
+    FSInvalidObject *invalidObject = [FSInvalidObject new];
     invalidObject.invalid = @"foobar";
-    BOOL success = [UCJSONSerialization setObject:(id<UCJSONSerializable>)invalidObject fromJSON:self.json];
+    BOOL success = [FSJSONSerialization setObject:(id<FSJSONSerializable>)invalidObject fromJSON:self.json];
     XCTAssertFalse(success, @"");
 }
 
 - (void)testDeserializeInvalidJSON {
-    BOOL success = [UCJSONSerialization setObject:self.serializableObject fromJSON:@{@(10): @"ten"}];
+    BOOL success = [FSJSONSerialization setObject:self.serializableObject fromJSON:@{@(10): @"ten"}];
     XCTAssertFalse(success, @"");
 }
 
@@ -205,12 +205,12 @@
 
 - (void)testDeserializeFloat {
     float deserializedFloat = self.serializableObject.aFloat;
-    XCTAssertEqualWithAccuracy(deserializedFloat, [self.json[@"aFloat"] floatValue], UCJSON_TESTS_FLOAT_ACCURACY, @"");
+    XCTAssertEqualWithAccuracy(deserializedFloat, [self.json[@"aFloat"] floatValue], FSJSON_TESTS_FLOAT_ACCURACY, @"");
 }
 
 - (void)testDeserializeDouble {
     double deserializedDouble = self.serializableObject.aDouble;
-    XCTAssertEqualWithAccuracy(deserializedDouble, [self.json[@"aDouble"] doubleValue], UCJSON_TESTS_DOUBLE_ACCURACY, @"");
+    XCTAssertEqualWithAccuracy(deserializedDouble, [self.json[@"aDouble"] doubleValue], FSJSON_TESTS_DOUBLE_ACCURACY, @"");
 }
 
 #pragma mark - Other object types
@@ -219,7 +219,7 @@
 - (void)testDeserializeDefaultDate {
     NSDate *deserializedDate = self.serializableObject.aDate;
     XCTAssertNotNil(deserializedDate, @"");
-    NSDateFormatter *defaultDateFormatter = [UCJSONSerialization defaultDateFormatter];
+    NSDateFormatter *defaultDateFormatter = [FSJSONSerialization defaultDateFormatter];
     NSString *deserializedDateString = [defaultDateFormatter stringFromDate:deserializedDate];
     XCTAssertNotNil(deserializedDateString, @"");
     XCTAssertTrue([deserializedDateString isEqualToString:self.json[@"aDate"]], @"");
@@ -300,7 +300,7 @@
 // ------------------------------------------------------------------------------------------
 
 - (void)testDeserializeCustomObject {
-    UCFoo *deserializedFoo = self.serializableObject.foo;
+    FSFoo *deserializedFoo = self.serializableObject.foo;
     XCTAssertNotNil(deserializedFoo, @"");
     XCTAssertTrue([deserializedFoo.foo isEqualToString:[self.json[@"foo"] objectForKey:@"foo"]], @"");
 }
@@ -309,17 +309,17 @@
 // ------------------------------------------------------------------------------------------
 
 - (void)testDeserializeCustomObjectArray {
-    NSArray<UCFoo*> *deserializedFooArray = self.serializableObject.aFooArray;
+    NSArray<FSFoo*> *deserializedFooArray = self.serializableObject.aFooArray;
     XCTAssertNotNil(deserializedFooArray, @"");
-    [deserializedFooArray enumerateObjectsUsingBlock:^(UCFoo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [deserializedFooArray enumerateObjectsUsingBlock:^(FSFoo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         XCTAssertTrue([obj.foo isEqualToString:[[self.json[@"aFooArray"] objectAtIndex:idx] objectForKey:@"foo"]]);
     }];
 }
 
 - (void)testDeserializeCustomObjectDictionary {
-    NSDictionary<NSString*,UCFoo*> *deserializedFooDictionary = self.serializableObject.aFooDictionary;
+    NSDictionary<NSString*,FSFoo*> *deserializedFooDictionary = self.serializableObject.aFooDictionary;
     XCTAssertNotNil(deserializedFooDictionary, @"");
-    [deserializedFooDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, UCFoo * _Nonnull obj, BOOL * _Nonnull stop) {
+    [deserializedFooDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, FSFoo * _Nonnull obj, BOOL * _Nonnull stop) {
         XCTAssertTrue([obj.foo isEqualToString:[[self.json[@"aFooDictionary"] objectForKey:key] objectForKey:@"foo"]]);
     }];
 }
@@ -328,12 +328,12 @@
 // ------------------------------------------------------------------------------------------
 
 - (void)testDeserializeCStruct {
-    UCStruct deserializedStruct = self.serializableObject.aStruct;
+    FSStruct deserializedStruct = self.serializableObject.aStruct;
     XCTAssertEqual(deserializedStruct.num, [[self.json[@"aStruct"] objectForKey:@"num"] intValue], @"");
 }
 
 - (void)testDeserializeCUnion {
-    UCUnion deserializedUnion = self.serializableObject.aUnion;
+    FSUnion deserializedUnion = self.serializableObject.aUnion;
     XCTAssertEqual(deserializedUnion.ch, [[self.json[@"aUnion"] objectForKey:@"ch"] charValue], @"");
 }
 
@@ -343,7 +343,7 @@
 - (void)testDeserializeValueTransformingDateToUnixTime {
     NSDate *deserializedUnixDate = self.serializableObject.unixDate;
     XCTAssertNotNil(deserializedUnixDate, @"");
-    XCTAssertEqualWithAccuracy(deserializedUnixDate.timeIntervalSince1970, [self.json[@"unixDate"] doubleValue], UCJSON_TESTS_DOUBLE_ACCURACY, @"");
+    XCTAssertEqualWithAccuracy(deserializedUnixDate.timeIntervalSince1970, [self.json[@"unixDate"] doubleValue], FSJSON_TESTS_DOUBLE_ACCURACY, @"");
 }
 
 - (void)testDeserializeRange {
@@ -381,9 +381,9 @@
 // ------------------------------------------------------------------------------------------
 
 - (void)testDeserializeSubclass {
-    UCSubObject *subObject = [UCSubObject new];
+    FSSubObject *subObject = [FSSubObject new];
     NSDictionary *json = @{@"name": @"super", @"subString": @"sub"};
-    BOOL success = [UCJSONSerialization setObject:subObject fromJSON:json];
+    BOOL success = [FSJSONSerialization setObject:subObject fromJSON:json];
     XCTAssertTrue(success, @"");
     
     NSString *deserializedSuperString = subObject.name;

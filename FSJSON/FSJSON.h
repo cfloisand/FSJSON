@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2017 Uppercut
+//  Copyright (c) 2017 Flyingsand
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,8 @@
 #import <Foundation/Foundation.h>
 
 
-#pragma mark - UCJSONSerializable
-@protocol UCJSONSerializable <NSObject>
+#pragma mark - FSJSONSerializable
+@protocol FSJSONSerializable <NSObject>
 @optional
 
 /*! @brief Return a mapping of the receiver's property name to its corresponding serialization key.
@@ -72,11 +72,11 @@
 @end
 
 
-#pragma mark - UCJSONSerialization
-@interface UCJSONSerialization : NSObject
+#pragma mark - FSJSONSerialization
+@interface FSJSONSerialization : NSObject
 
 /*! @brief Returns the JSON representation of the given object, or nil if a valid JSON object could not be created or if \c object was nil. */
-+ (NSDictionary *)JSONFromObject:(id<UCJSONSerializable>)object;
++ (NSDictionary *)JSONFromObject:(id<FSJSONSerializable>)object;
 
 /*! @brief Loads the JSON from the given file. 
     @details This method is the same as calling -JSONFromFile:withOptions:error: with \c NSJSONReadingMutableContainers as the option. 
@@ -100,17 +100,17 @@
 
 /*! @brief Sets the data in the given object from its JSON representation. 
     @return YES on success, or NO if there was an error. An error will occur if either \c object or \c json are nil, if \c json is not a valid 
-    JSON object, or \c object does not conform to \c UCJSONSerializable. */
-+ (BOOL)setObject:(id<UCJSONSerializable>)object fromJSON:(NSDictionary *)json;
+    JSON object, or \c object does not conform to \c FSJSONSerializable. */
++ (BOOL)setObject:(id<FSJSONSerializable>)object fromJSON:(NSDictionary *)json;
 
 /*! @brief Serializes the given object to JSON and writes it to the specified file.
     @return YES on success, or NO on error. An error will occur if either \c object or \c file are nil, if the file could not be opened, if object could not 
     be serialized into a valid JSON object, or if there was an error writing to the file. */
-+ (BOOL)serializeObject:(id<UCJSONSerializable>)object toFile:(NSString *)file error:(NSError * __autoreleasing *)error;
++ (BOOL)serializeObject:(id<FSJSONSerializable>)object toFile:(NSString *)file error:(NSError * __autoreleasing *)error;
 
 /*! @brief Creates a new instance of an object whose type is the given class from the JSON representation.
     @return A new instance of the given class with data from \c json, or nil on error. An error will occur if either \c cl or \c json are nil, if \c json is
-    not a valid JSON object, or if instances of the given class do not conform to \c UCJSONSerializable. */
+    not a valid JSON object, or if instances of the given class do not conform to \c FSJSONSerializable. */
 + (id)objectOfClass:(Class)cl fromJSON:(NSDictionary *)json;
 
 /*! @brief Creates a new instance of an object whose type is the given class from the JSON data in the file.
@@ -125,8 +125,8 @@
 
 
 #pragma mark - Value transformers
-@interface UCDateToUnixTimeTransformer : NSValueTransformer
+@interface FSDateToUnixTimeTransformer : NSValueTransformer
 @end
 
-@interface UCRangeTransformer : NSValueTransformer
+@interface FSRangeTransformer : NSValueTransformer
 @end

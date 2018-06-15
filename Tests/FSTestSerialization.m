@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2017 Uppercut
+//  Copyright (c) 2017 Flyingsand
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,19 +24,19 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "UCSerializableObject.h"
-#import "UCTests.h"
+#import "FSSerializableObject.h"
+#import "FSTests.h"
 
 
-@interface UCJSONSerializationTestCase : XCTestCase
-@property (nonatomic, strong) UCSerializableObject *serializableObject;
+@interface FSJSONSerializationTestCase : XCTestCase
+@property (nonatomic, strong) FSSerializableObject *serializableObject;
 @end
 
-@implementation UCJSONSerializationTestCase
+@implementation FSJSONSerializationTestCase
 
 - (void)setUp {
     [super setUp];
-    self.serializableObject = [UCSerializableObject new];
+    self.serializableObject = [FSSerializableObject new];
 }
 
 - (void)tearDown {
@@ -45,21 +45,21 @@
 }
 
 - (void)testSerializeNilObject {
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:nil];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:nil];
     XCTAssertNil(json, @"");
 }
 
 - (void)testSerializeInvalidObject {
-    UCInvalidObject *invalidObject = [UCInvalidObject new];
+    FSInvalidObject *invalidObject = [FSInvalidObject new];
     invalidObject.invalid = @"oops";
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:(id<UCJSONSerializable>)invalidObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:(id<FSJSONSerializable>)invalidObject];
     XCTAssertNil(json, @"");
 }
 
 - (void)testSerializeInvalidProperty {
-    UCInvalidPropertyObject *invalidPropertyObject = [UCInvalidPropertyObject new];
+    FSInvalidPropertyObject *invalidPropertyObject = [FSInvalidPropertyObject new];
     invalidPropertyObject.aSet = [NSSet setWithObject:@"foo"];
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:invalidPropertyObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:invalidPropertyObject];
     XCTAssertEqual(json.count, 0, @"");
 }
 
@@ -69,7 +69,7 @@
 - (void)testSerializeString {
     NSString *testName = @"Uppercut";
     self.serializableObject.name = testName;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSString *serializedName = [json objectForKey:@"name"];
@@ -80,7 +80,7 @@
 - (void)testSerializeMutableString {
     NSMutableString *testName = [NSMutableString stringWithString:@"Uppercut"];
     self.serializableObject.mutableName = testName;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSMutableString *serializedMutableName = [json objectForKey:@"mutableName"];
@@ -95,7 +95,7 @@
 - (void)testSerializeNumber {
     NSNumber *testNumber = @(42);
     self.serializableObject.aNumber = testNumber;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSNumber *serializedNumber = [json objectForKey:@"aNumber"];
@@ -106,7 +106,7 @@
 - (void)testSerializeInteger {
     NSInteger testInteger = 42;
     self.serializableObject.anInteger = testInteger;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSInteger serializedInteger = [[json objectForKey:@"anInteger"] integerValue];
@@ -116,7 +116,7 @@
 - (void)testSerializeBool {
     BOOL testBool = YES;
     self.serializableObject.aBool = testBool;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     BOOL serializedBool = [[json objectForKey:@"aBool"] boolValue];
@@ -126,7 +126,7 @@
 - (void)testSerializeCBool {
     bool testBool = true;
     self.serializableObject.aCBool = testBool;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     bool serializedCBool = [[json objectForKey:@"aCBool"] boolValue];
@@ -136,7 +136,7 @@
 - (void)testSerializeChar {
     char testChar = 'u';
     self.serializableObject.aChar = testChar;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     char serializedChar = [[json objectForKey:@"aChar"] charValue];
@@ -146,7 +146,7 @@
 - (void)testSerializeShort {
     short testShort = SHRT_MIN;
     self.serializableObject.aShort = testShort;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     short serializedShort = [[json objectForKey:@"aShort"] shortValue];
@@ -156,7 +156,7 @@
 - (void)testSerializeInt {
     int testInt = INT_MIN;
     self.serializableObject.anInt = testInt;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     int serializedInt = [[json objectForKey:@"anInt"] intValue];
@@ -166,7 +166,7 @@
 - (void)testSerializeLong {
     long testLong = LONG_MAX;
     self.serializableObject.aLong = testLong;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     long serializedLong = [[json objectForKey:@"aLong"] longValue];
@@ -176,7 +176,7 @@
 - (void)testSerializeLongLong {
     long long testLongLong = LONG_LONG_MIN;
     self.serializableObject.aLongLong = testLongLong;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     long long serializedLongLong = [[json objectForKey:@"aLongLong"] longLongValue];
@@ -186,7 +186,7 @@
 - (void)testSerializeUnsignedChar {
     unsigned char testUChar = '@';
     self.serializableObject.aUChar = testUChar;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     unsigned char serializedUChar = [[json objectForKey:@"aUChar"] unsignedCharValue];
@@ -196,7 +196,7 @@
 - (void)testSerializeUnsignedShort {
     unsigned short testUShort = USHRT_MAX;
     self.serializableObject.aUShort = testUShort;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     unsigned short serializedUShort = [[json objectForKey:@"aUShort"] unsignedShortValue];
@@ -206,7 +206,7 @@
 - (void)testSerializeUnsignedInt {
     unsigned int testUInt = UINT_MAX;
     self.serializableObject.aUInt = testUInt;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     unsigned int serializedUInt = [[json objectForKey:@"aUInt"] unsignedIntValue];
@@ -216,7 +216,7 @@
 - (void)testSerializeUnsignedLong {
     unsigned long testULong = ULONG_MAX;
     self.serializableObject.aULong = testULong;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     unsigned long serializedULong = [[json objectForKey:@"aULong"] unsignedLongValue];
@@ -226,7 +226,7 @@
 - (void)testSerializeUnsignedLongLong {
     unsigned long long testULongLong = ULONG_LONG_MAX;
     self.serializableObject.aULongLong = testULongLong;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     unsigned long long serializedULongLong = [[json objectForKey:@"aULongLong"] unsignedLongLongValue];
@@ -236,21 +236,21 @@
 - (void)testSerializeFloat {
     float testFloat = 3.14159265359f;
     self.serializableObject.aFloat = testFloat;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     float serializedFloat = [[json objectForKey:@"aFloat"] floatValue];
-    XCTAssertEqualWithAccuracy(serializedFloat, testFloat, UCJSON_TESTS_FLOAT_ACCURACY, @"");
+    XCTAssertEqualWithAccuracy(serializedFloat, testFloat, FSJSON_TESTS_FLOAT_ACCURACY, @"");
 }
 
 - (void)testSerializeDouble {
     double testDouble = 2.7182818284590451;
     self.serializableObject.aDouble = testDouble;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     double serializedDouble = [[json objectForKey:@"aDouble"] doubleValue];
-    XCTAssertEqualWithAccuracy(serializedDouble, testDouble, UCJSON_TESTS_DOUBLE_ACCURACY, @"");
+    XCTAssertEqualWithAccuracy(serializedDouble, testDouble, FSJSON_TESTS_DOUBLE_ACCURACY, @"");
 }
 
 #pragma mark - Other object types
@@ -259,10 +259,10 @@
 - (void)testSerializeDefaultDate {
     NSDate *testDate = [NSDate date];
     self.serializableObject.aDate = testDate;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
-    NSDateFormatter *defaultDateFormatter = [UCJSONSerialization defaultDateFormatter];
+    NSDateFormatter *defaultDateFormatter = [FSJSONSerialization defaultDateFormatter];
     NSString *serializedDateString = [json objectForKey:@"aDate"];
     XCTAssertNotNil(serializedDateString, @"");
     XCTAssertTrue([serializedDateString isEqualToString:[defaultDateFormatter stringFromDate:testDate]], @"");
@@ -271,7 +271,7 @@
 - (void)testSerializeCustomDate {
     NSDate *testDate = [NSDate date];
     self.serializableObject.customDate = testDate;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSDateFormatter *dateFormatter = [self.serializableObject dateFormatterForDateProperty:@"customDate"];
@@ -284,7 +284,7 @@
     const uint8_t bytes[] = {0xBA, 0xDC, 0xFF, 0xEE, 0xDA, 0xDA};
     NSData *testData = [NSData dataWithBytes:bytes length:sizeof(bytes)];
     self.serializableObject.someData = testData;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSData *serializedData = [[NSData alloc] initWithBase64EncodedString:[json objectForKey:@"someData"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -296,7 +296,7 @@
     const uint8_t bytes[] = {0xBA, 0xDC, 0xFF, 0xEE, 0xDA, 0xDA};
     NSMutableData *testData = [NSMutableData dataWithBytes:bytes length:sizeof(bytes)];
     self.serializableObject.someMutableData = testData;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSMutableData *serializedMutableData = [[NSMutableData alloc] initWithBase64EncodedString:[json objectForKey:@"someMutableData"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -308,7 +308,7 @@
 - (void)testSerializeNull {
     NSNull *testNull = [NSNull null];
     self.serializableObject.nullObject = testNull;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSNull *serializedNull = [json objectForKey:@"nullObject"];
@@ -322,7 +322,7 @@
 - (void)testSerializeArray {
     NSArray *testArray = @[@"one", @"two", @"three"];
     self.serializableObject.anArray = testArray;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSArray *serializedArray = [json objectForKey:@"anArray"];
@@ -333,7 +333,7 @@
 - (void)testSerializeMutableArray {
     NSMutableArray *testArray = [NSMutableArray arrayWithArray:@[@"red", @"green", @"blue"]];
     self.serializableObject.aMutableArray = testArray;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSMutableArray *serializedMutableArray = [json objectForKey:@"aMutableArray"];
@@ -345,7 +345,7 @@
 - (void)testSerializeDictionary {
     NSDictionary *testDictionary = @{@"oneKey": @"one", @"twoKey": @"two", @"threeKey": @"three"};
     self.serializableObject.aDictionary = testDictionary;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSDictionary *serializedDictionary = [json objectForKey:@"aDictionary"];
@@ -356,7 +356,7 @@
 - (void)testSerializeMutableDictionary {
     NSMutableDictionary *testDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"redKey": @"red", @"greenKey": @"green", @"blueKey": @"blue"}];
     self.serializableObject.aMutableDictionary = testDictionary;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSMutableDictionary *serializedMutableDictionary = [json objectForKey:@"aMutableDictionary"];
@@ -368,7 +368,7 @@
 - (void)testSerializeArrayWithNull {
     NSArray *testArray = @[@"NotNull", [NSNull null]];
     self.serializableObject.arrayWithNull = testArray;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSArray *serializedArray = [json objectForKey:@"arrayWithNull"];
@@ -380,7 +380,7 @@
 - (void)testSerializeDictionaryWithNull {
     NSDictionary *testDictionary = @{@"NotNullKey": @"NotNull", @"NullKey": [NSNull null]};
     self.serializableObject.dictionaryWithNull = testDictionary;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSDictionary *serializedDictionary = [json objectForKey:@"dictionaryWithNull"];
@@ -393,10 +393,10 @@
 // ------------------------------------------------------------------------------------------
 
 - (void)testSerializeCustomObject {
-    UCFoo *foo = [UCFoo new];
+    FSFoo *foo = [FSFoo new];
     foo.foo = @"foo";
     self.serializableObject.foo = foo;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSDictionary *serializedFoo = [json objectForKey:@"foo"];
@@ -408,12 +408,12 @@
 // ------------------------------------------------------------------------------------------
 
 - (void)testSerializeCustomObjectArray {
-    UCFoo *foo1 = [UCFoo new]; foo1.foo = @"foo1";
-    UCFoo *foo2 = [UCFoo new]; foo2.foo = @"foo2";
-    UCFoo *foo3 = [UCFoo new]; foo3.foo = @"foo3";
-    NSArray<UCFoo*> *fooArray = @[foo1, foo2, foo3];
+    FSFoo *foo1 = [FSFoo new]; foo1.foo = @"foo1";
+    FSFoo *foo2 = [FSFoo new]; foo2.foo = @"foo2";
+    FSFoo *foo3 = [FSFoo new]; foo3.foo = @"foo3";
+    NSArray<FSFoo*> *fooArray = @[foo1, foo2, foo3];
     self.serializableObject.aFooArray = fooArray;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSArray *serializedFooArray = [json objectForKey:@"aFooArray"];
@@ -425,12 +425,12 @@
 }
 
 - (void)testSerializeCustomObjectDictionary {
-    UCFoo *foo0 = [UCFoo new]; foo0.foo = @"foo0";
-    UCFoo *foo1 = [UCFoo new]; foo1.foo = @"foo1";
-    UCFoo *foo2 = [UCFoo new]; foo2.foo = @"foo2";
-    NSDictionary<NSString*,UCFoo*> *fooDictionary = @{@"foo0": foo0, @"foo1": foo1, @"foo2": foo2};
+    FSFoo *foo0 = [FSFoo new]; foo0.foo = @"foo0";
+    FSFoo *foo1 = [FSFoo new]; foo1.foo = @"foo1";
+    FSFoo *foo2 = [FSFoo new]; foo2.foo = @"foo2";
+    NSDictionary<NSString*,FSFoo*> *fooDictionary = @{@"foo0": foo0, @"foo1": foo1, @"foo2": foo2};
     self.serializableObject.aFooDictionary = fooDictionary;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSDictionary *serializedFooDictionary = [json objectForKey:@"aFooDictionary"];
@@ -444,10 +444,10 @@
 // ------------------------------------------------------------------------------------------
 
 - (void)testSerializeCStruct {
-    UCStruct testStruct;
+    FSStruct testStruct;
     testStruct.num = 99;
     self.serializableObject.aStruct = testStruct;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSDictionary *serializedStruct = [json objectForKey:@"aStruct"];
@@ -456,10 +456,10 @@
 }
 
 - (void)testSerializeCUnion {
-    UCUnion testUnion;
+    FSUnion testUnion;
     testUnion.ch = 'u';
     self.serializableObject.aUnion = testUnion;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSDictionary *serializedUnion = [json objectForKey:@"aUnion"];
@@ -473,17 +473,17 @@
 - (void)testSerializeValueTransformingDateToUnixTime {
     NSDate *testDate = [NSDate date];
     self.serializableObject.unixDate = testDate;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     double serializedUnixTime = [[json objectForKey:@"unixDate"] doubleValue];
-    XCTAssertEqualWithAccuracy(serializedUnixTime, testDate.timeIntervalSince1970, UCJSON_TESTS_DOUBLE_ACCURACY, @"");
+    XCTAssertEqualWithAccuracy(serializedUnixTime, testDate.timeIntervalSince1970, FSJSON_TESTS_DOUBLE_ACCURACY, @"");
 }
 
 - (void)testSerializeRange {
     NSRange testRange = NSMakeRange(4, 512);
     self.serializableObject.aRange = testRange;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSDictionary *serializedRange = [json objectForKey:@"aRange"];
@@ -499,7 +499,7 @@
 - (void)testSerializeIgnoredProperty {
     NSString *ignoredString = @"nothing";
     self.serializableObject.ignored = ignoredString;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     XCTAssertNil([json objectForKey:@"ignored"], @"");
@@ -511,7 +511,7 @@
 - (void)testSerializeKeyMapping {
     NSString *aliasString = @"alias";
     self.serializableObject.alias = aliasString;
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     XCTAssertNil([json objectForKey:@"alias"], @"");
@@ -524,7 +524,7 @@
 // ------------------------------------------------------------------------------------------
 
 - (void)testSerializeInstanceVariable {
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:self.serializableObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:self.serializableObject];
     
     XCTAssertNotNil(json, @"");
     NSUInteger serializedIvar = [[json objectForKey:@"anIvar"] integerValue];
@@ -535,10 +535,10 @@
 // ------------------------------------------------------------------------------------------
 
 - (void)testSerializeSubclass {
-    UCSubObject *subObject = [UCSubObject new];
+    FSSubObject *subObject = [FSSubObject new];
     subObject.subString = @"sub";
     subObject.name = @"super";
-    NSDictionary *json = [UCJSONSerialization JSONFromObject:subObject];
+    NSDictionary *json = [FSJSONSerialization JSONFromObject:subObject];
     
     XCTAssertNotNil(json, @"");
     NSString *serializedSuperString = [json objectForKey:@"name"];

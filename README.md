@@ -1,18 +1,18 @@
-# UCJSON
+# FSJSON
 
-UCJSON is a generic JSON serialization library for use in iOS and macOS apps, employing a clean and flexible API. Supported types include all primitives, Objective-C types compatible with the JSON format (arrays, dictionaries, `NSNumber`, and `NSNull`), and C types (`struct` and `union`). Instance variables are also serializable, not just properties.
+FSJSON is a generic JSON serialization library for use in iOS and macOS apps, employing a clean and flexible API. Supported types include all primitives, Objective-C types compatible with the JSON format (arrays, dictionaries, `NSNumber`, and `NSNull`), and C types (`struct` and `union`). Instance variables are also serializable, not just properties.
 
 This frees you up from much of the tedious work in managing the serialization/deserialization process of your model objects. This is especially noticeable during development as properties and instance variables of your classes change (by name and/or type), or are added/removed. Generic serialization utilizing introspection of your models handle much of this boilerplate work for you.  
 
 Note that this library does __not__ work with Swift classes due to differences in the inner workings of Objective-C and Swift. With some basic testing, however, it looks like this library can be interoperable with Swift if the classes you want to serialize are written in Objective-C, then imported via a bridging header into your Swift project.
 
 ## Installation
-Simply download this repository and copy _UCJSON.h_ & _UCJSON.m_ into your project.
+Simply download this repository and copy _FSJSON.h_ & _FSJSON.m_ into your project.
 
 ## Usage
-Adopt the `UCJSONSerializable` protocol for objects that you will be serializing/deserializing (no subclassing required!).
+Adopt the `FSJSONSerializable` protocol for objects that you will be serializing/deserializing (no subclassing required!).
 ```
-@interface SerializableClass : NSObject<UCJSONSerializable>
+@interface SerializableClass : NSObject<FSJSONSerializable>
 @property (nonatomic, strong) NSString *aString;
 @property (nonatomic) NSInteger anInteger;
 @end
@@ -21,52 +21,52 @@ Adopt the `UCJSONSerializable` protocol for objects that you will be serializing
 To serialize an object to a JSON model:
 ```
 SerializableClass *obj = ...;
-NSDictionary *json = [UCJSONSerialization JSONFromObject:obj];
+NSDictionary *json = [FSJSONSerialization JSONFromObject:obj];
 ```
 To serialize an object directly to a JSON file:
 ```
 SerializableClass *obj = ...;
 NSString *filePath = ...;
 NSError *error;
-BOOL success = [UCJSONSerialization serializeObject:obj toFile:filePath: error:&error];
+BOOL success = [FSJSONSerialization serializeObject:obj toFile:filePath: error:&error];
 ```
 If you don't want to serialize directly to a file, you can write the JSON model object to a file at a later time:
 ```
 SerializableClass *obj = ...;
-NSDictionary *json = [UCJSONSerialization JSONFromObject:obj];
+NSDictionary *json = [FSJSONSerialization JSONFromObject:obj];
 
 ...
 
 NSString *filePath = ...;
 NSError *error;
-BOOL success = [UCJSONSerialization writeJSON:json toFile:filePath error:&error];
+BOOL success = [FSJSONSerialization writeJSON:json toFile:filePath error:&error];
 ```
 #### Deserializing
 To deserialize an object from a JSON model object:
 ```
 NSDictionary *json = ...;
-SerializableClass *obj = [UCJSONSerialization objectOfClass:[SerializableClass class] fromJSON:json];
+SerializableClass *obj = [FSJSONSerialization objectOfClass:[SerializableClass class] fromJSON:json];
 ```
 If you already have an instance of the class that you wish to set or update with a JSON model object:
 ```
 NSDictionary *json = ...;
 SerializableClass *obj = ...;
-BOOL success = [UCJSONSerialization setObject:obj fromJSON:json];
+BOOL success = [FSJSONSerialization setObject:obj fromJSON:json];
 ```
 To directly deserialize an object from a JSON file:
 ```
 NSString *filePath = ...;
 NSError *error;
-SerializableClass *obj = [UCJSONSerialization deserializeObjectOfClass:[SerializableClass class] fromFile:filePath error:&error];
+SerializableClass *obj = [FSJSONSerialization deserializeObjectOfClass:[SerializableClass class] fromFile:filePath error:&error];
 ```
 To load a JSON model object from a file:
 ```
 NSString *filePath = ...;
 NSError *error;
-NSDictionary *json = [UCJSONSerialization JSONFromFile:filePath error:&error];
+NSDictionary *json = [FSJSONSerialization JSONFromFile:filePath error:&error];
 ```
 ## Advanced
-UCJSON automatically handles the following types:
+FSJSON automatically handles the following types:
 - `NSString` & `NSMutableString`
 - `NSNumber`
 - `NSDate`
@@ -80,7 +80,7 @@ UCJSON automatically handles the following types:
 - `long long` & `unsigned long long`
 - `float` (`CGFloat` on 32-bit platforms)
 - `double` (`CGFloat` on 64-bit platforms)
-- objects that conform to `UCJSONSerializable`
+- objects that conform to `FSJSONSerializable`
 
 #### Instance variables
 By default, instance variables are included in serialization/deserialization. e.g.:
@@ -92,7 +92,7 @@ By default, instance variables are included in serialization/deserialization. e.
 `_aValue` will be serialized as "aValue". This can be ignored by implementing `-doNotSerialize` (see below for details).
 
 #### Arrays
-Arrays must be a homogenous collection of supported types. If an array contains custom objects conforming to `UCJSONSerializable`, implement the `-classForArrayElementsOfProperty:` method from the `UCJSONSerializable` protocol:
+Arrays must be a homogenous collection of supported types. If an array contains custom objects conforming to `FSJSONSerializable`, implement the `-classForArrayElementsOfProperty:` method from the `FSJSONSerializable` protocol:
 ```
 - (Class)classForArrayElementsOfProperty:(NSString *)property {
     if ([property isEqualToString:@"anArray"]) {
@@ -104,7 +104,7 @@ Arrays must be a homogenous collection of supported types. If an array contains 
 If an array does not contain a homogeneous collection of objects, it can still be serialized using a value transformer by implementing `-valueTransformerForProperty:`.
 
 #### Dictionaries
-Dictionaries must use `NSString`s as keys. Values, like arrays, can be any supported type. If a value in a dictionary is a custom class conforming to `UCJSONSerializable`, implement the `-classForDictionaryObjectWithKeyPath:` method:
+Dictionaries must use `NSString`s as keys. Values, like arrays, can be any supported type. If a value in a dictionary is a custom class conforming to `FSJSONSerializable`, implement the `-classForDictionaryObjectWithKeyPath:` method:
 ```
 - (Class)classForDictionaryObjectWithKeyPath:(NSString *)keyPath {
     NSArray<NSString*> *kpComponents = [keyPath componentsSeparatedByString:@"."];
@@ -119,7 +119,7 @@ Dictionaries must use `NSString`s as keys. Values, like arrays, can be any suppo
 ```
 
 #### C types
-C `struct`s and `union`s are handled but require the object to implement the `-valueTransformerForProperty:` method from the `UCJSONSerializable` protocol:
+C `struct`s and `union`s are handled but require the object to implement the `-valueTransformerForProperty:` method from the `FSJSONSerializable` protocol:
 ```
 - (NSValueTransformer *)valueTransformerForProperty:(NSString *)property {
     if ([property isEqualToString:@"aStruct"]) {
@@ -129,7 +129,7 @@ C `struct`s and `union`s are handled but require the object to implement the `-v
     return nil;
 }
 ```
-For an example of creating an `NSValueTransformer` subclass, see the `UCStructValueTransformer` class used by `UCSerializableObject` in the unit tests. There are also 2 value transformers included in _UCJSON.h_/_UCJSON.m_: one for transforming `NSDate` objects into Unix time, and another for serializing `NSRange` values.
+For an example of creating an `NSValueTransformer` subclass, see the `FSStructValueTransformer` class used by `FSSerializableObject` in the unit tests. There are also 2 value transformers included in _FSJSON.h_/_FSJSON.m_: one for transforming `NSDate` objects into Unix time, and another for serializing `NSRange` values.
 
 #### Dates
 By default, `NSDate` properties are serialized as strings using the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) profile of the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) standard. To serialize using a different format or standard, implement the `-dateFormatterForDateProperty:` method:
@@ -168,4 +168,4 @@ To ignore properties or instance variables from serialization, implement the `-d
 ```
 
 ## License
-UCJSON is released under the MIT license. See [LICENSE](https://github.com/madebyuppercut/UCJSON/blob/master/LICENSE.txt) for more details.
+FSJSON is released under the MIT license. See [LICENSE](https://github.com/cfloisand/FSJSON/blob/master/LICENSE.txt) for more details.
